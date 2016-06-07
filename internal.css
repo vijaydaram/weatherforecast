@@ -1,0 +1,95 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+#header {
+   
+   height:160px;
+    width: 100%;
+    position: relative;
+    display: block;
+    text-align: center;
+
+}
+#header h1{
+    font-family: TimesNewRoman, 'Times New Roman', Times, Baskerville, Georgia, serif;
+	font-size: 50px;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+	line-height: 26.4px;
+    color: white;
+    text-shadow: 1px 1px 1px #ff5c33;
+    
+}
+h5.title{
+    display: inline;
+}
+h4.city-name{
+    display: inline;
+}
+#form {
+
+/*    margin-left: 50px;*/
+    width: 300px;
+    margin-top: 10px;
+}
+
+.indent {
+
+    margin-left: 50px;
+}
+
+.move-down {
+/*    margin-top: 100px;*/
+}
+td img{
+    width: 30px;
+    height: 30px;
+}
+div#weather{
+    width: 45%;
+    float: left;
+}
+div#second{
+    width: 50%;
+    float:right;
+}
+div#temp{
+    width:5%;
+    float:left;
+    position: relative;
+}
+div#map{
+    height: 700px;
+    width: 650px;
+}
+div.infoWindowContent img{
+    width: 50px;
+    height: 50px;
+}
+
+#footer {
+    background-color:darkgrey;
+    color:black;
+    clear:both;
+    text-align:center;
+    padding:5px;
+}
+#backgroundimage
+{
+   height: 160px;
+   left: 0;
+   margin: 0;
+   padding: 0;
+   position: absolute;
+   top: 0;
+   width: 100%;
+    float:left;
+   z-index: -1;
+}
+div.container{
+    width:100%;
+    position: relative;
+    height:80%;
+        
+}
