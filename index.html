@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+
+    <head>  
+        <link rel="stylesheet" href="internal.css"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+        <script src="https://code.angularjs.org/1.4.9/angular-route.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
+        <script src="script.js"></script>
+        <script src="ngAutoComplete.js"></script>
+    </head>
+    <body>
+        <div id="main">
+            <div id="header">
+                <img id="backgroundimage" ng-src="http://freetwitterheaders.net/wp-content/uploads/2013/01/Rainbow-in-the-Clouds-Twitter-Headers-Twitter-Covers.jpg" border="0" alt=""/>
+                <br/><br/>
+                <h1>Weather forecast</h1>
+            </div>
+            <div class="container" id="first">
+                <div ng-controller="TestCtrl">
+                <form id="form" role="form">
+                    <div class="form-group move-down">
+                    <input type="text" id="Autocomplete" class="form-control" ng-autocomplete="result1" details="details1" options="options1"/>
+                    </div>
+                </form>
+                <div id="weather">
+                    <h5 class="title"><i> Weather forecast for : </i></h5><h4 class="ng-cloak city-name">{{city | titlecase}}</h4>
+                    <table class="table table-striped table-condensed table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:15%">Date</th>
+                                <th style="width:10%">Day</th>
+                                <th style="width:20%">Weather</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="result in weather">
+                                <td style="width:15%">{{result.date}}</td>
+                                <td style="width:10%">{{result.day}}</td>
+                                <td style="width:20%">
+                                    <table>
+                                        <tr>
+                                            <td rowspan="2">                       <img ng-src="http://l.yimg.com/a/i/us/we/52/{{result.code}}.gif"/>       </td>                        <td>High: {{result.high | formatTemperature: 'C':true}}C
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Low: {{result.low | formatTemperature: 'C':true}}C
+                                            </td>
+                                        </tr>
+                                    </table>{{result.text}}
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                    <div id="temp">
+                    </div>
+            </div>
+            <div ng-controller="MapCtrl" id="second">
+                <br/>
+                <br/>
+                <div id="map"></div>
+            </div>
+    </div>
+    <div id="footer">
+        Mail me: <a href="mailto:daram.vijaykumar@gmail.com?Subject=Regarding%20WeatherApp" target="_top">daram.vijaykumar@gmail.com</a> 
+    </div>
+</div>
+</body>
+</html>
