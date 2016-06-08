@@ -99,3 +99,29 @@ myApp.controller('MapCtrl', ['$scope','myService','$rootScope',function ($scope,
     google.maps.event.trigger(selectedMarker, 'click');
     }
 }]);
+
+myApp.directive("myCurrentTime", function(dateFilter){
+    return function(scope, element, attrs){
+        var format='MM/dd/yyyy h:mm:ss a';
+        
+        /*scope.$watch(attrs.myCurrentTime, function(value) {
+            format = value;
+           
+        });*/
+        
+        function updateTime(){
+            var dt = dateFilter(new Date(), format);
+            element.text(dt);
+        }
+         updateTime();
+        
+        function updateLater() {
+            setTimeout(function() {
+              updateTime(); // update DOM
+              updateLater(); // schedule another update
+            }, 1000);
+        }
+        
+        updateLater();
+    }
+});

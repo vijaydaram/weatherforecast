@@ -83,9 +83,9 @@ angular.module( "ngAutocomplete", [])
         newAutocomplete()
 
         //watch options provided to directive
-        /*scope.watchOptions = function () {
+        scope.watchOptions = function () {
           return scope.options
-        };*/
+        };
         scope.$watch(scope.watchOptions, function () {
           initOpts()
           newAutocomplete()
