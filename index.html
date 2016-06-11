@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html ng-app="myApp">
 
-    <head>  
+    <head>
+        <link rel="icon" type="image/png" src="http://dl.dropboxusercontent.com/u/106116225/icon/icon.png">
         <link rel="stylesheet" href="internal.css"/>
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.6/angular.min.js"></script>
@@ -13,8 +14,8 @@
     <body>
         <div id="main">
             <div id="header">
-                <span style="float:right;color:grey" my-current-time="format"> </span>
-                <h1>Weather forecast</h1>
+                <span style="float:right;color:grey;margin-top:30px" my-current-time="format"> </span>
+                <img style="float:left;position:relative;height:80px;margin-bottom:10px" ng-src="./logo/WeatherAppLogo.png"/>
             </div>
             <div class="container" id="first">
                 <div ng-controller="TestCtrl">
