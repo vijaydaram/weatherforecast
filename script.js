@@ -24,9 +24,16 @@ myApp.filter('formatTemperature', [function() {
     };
     }
 ]);
-
+myApp.filter('fullDay'
+,[function(){
+    return function(input){
+        var days={'sun':'Sunday','mon':'Monday','tue':'Tuesday','wed':'Wednesday','thu':'Thursday','fri':'Friday','sat':'Saturday'};
+        return days[input.toLowerCase()];
+    };
+}]);
 myApp.service('myService',function($http){
     var self=this;
+    this.days={'sun':'Sunday','mon':'Monday','tue':'Tuesday','wed':'Wednesday','thu':'Thursday','fri':'Friday','sat':'Saturday'};
     var details={};
     this.getWeather=function(city,callback){
         $http.get(self.urlStart+encodeURIComponent(self.queryStart+city+self.queryEnd)+self.urlEnd).success(function(result){
@@ -71,7 +78,7 @@ myApp.controller('MapCtrl', ['$scope','myService','$rootScope',function ($scope,
         var temp=$rootScope.details&&$rootScope.details.geometry&&$rootScope.details.geometry.location&&$rootScope.details.geometry.location.lat();
         mapOptions.center = new google.maps.LatLng(temp,$rootScope.details.geometry.location.lng());
         $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-        $scope.content = '<table><tr><td rowspan="2"><img src="http://l.yimg.com/a/i/us/we/52/'+$rootScope.tempWeather[0].code+'.gif"/></td>'+'<td>'+$rootScope.tempWeather[0].date+'( '+$rootScope.tempWeather[0].day+'day )</td></tr><tr><td><label>'+$rootScope.tempWeather[0].text+'</label></td></tr>'; createMarker({'lat':$rootScope.details.geometry.location.lat(),'long':$rootScope.details.geometry.location.lng(),'city':$rootScope.city,'desc':$scope.content});
+        $scope.content = '<table><tr><td rowspan="2"><img src="http://l.yimg.com/a/i/us/we/52/'+$rootScope.tempWeather[0].code+'.gif"/></td>'+'<td>'+$rootScope.tempWeather[0].date+'( '+myService.days[$rootScope.tempWeather[0].day.toLowerCase()]+' )</td></tr><tr><td><label>'+$rootScope.tempWeather[0].text+'</label></td></tr>'; createMarker({'lat':$rootScope.details.geometry.location.lat(),'long':$rootScope.details.geometry.location.lng(),'city':$rootScope.city,'desc':$scope.content});
         $scope.openInfoWindow($scope.marker);
     });
 
@@ -99,3 +106,29 @@ myApp.controller('MapCtrl', ['$scope','myService','$rootScope',function ($scope,
     google.maps.event.trigger(selectedMarker, 'click');
     }
 }]);
+
+myApp.directive("myCurrentTime", function(dateFilter){
+    return function(scope, element, attrs){
+        var format='MM/dd/yyyy h:mm:ss a';
+        
+        /*scope.$watch(attrs.myCurrentTime, function(value) {
+            format = value;
+           
+        });*/
+        
+        function updateTime(){
+            var dt = dateFilter(new Date(), format);
+            element.text(dt);
+        }
+         updateTime();
+        
+        function updateLater() {
+            setTimeout(function() {
+              updateTime(); // update DOM
+              updateLater(); // schedule another update
+            }, 1000);
+        }
+        
+        updateLater();
+    }
+});
