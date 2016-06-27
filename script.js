@@ -33,15 +33,11 @@ myApp.filter('fullDay'
 }]);
 myApp.service('myService',function($http){
     var self=this;
+    self.loading=false;
     this.days={'sun':'Sunday','mon':'Monday','tue':'Tuesday','wed':'Wednesday','thu':'Thursday','fri':'Friday','sat':'Saturday'};
     var details={};
     this.getWeather=function(city,callback){
-        $http.get(self.urlStart+encodeURIComponent(self.queryStart+city+self.queryEnd)+self.urlEnd).success(function(result){
-        self.cityName = result.query.results.channel.title.split("-")[1].trim();
-        callback(result);
-    }).error(function(data,status){
-        console.log(data);
-    })
+        return $http.get(self.urlStart+encodeURIComponent(self.queryStart+city+self.queryEnd)+self.urlEnd);
     }
     this.urlStart="https://query.yahooapis.com/v1/public/yql?q=";
     this.queryStart="select * from weather.forecast where woeid in (select woeid from geo.places(1) where text=\"";
@@ -54,23 +50,29 @@ myApp.controller("TestCtrl",['$scope','myService','$rootScope',function ($scope,
     $scope.result1 = '';
     $scope.options1 = null;
     $scope.details1 = '';
+    $scope.loading=false;
     $scope.$watch('result1',function(){
         if($scope.result1!==''){
-                myService.getWeather($scope.result1,function(result){
+            $scope.loading=true;
+                myService.getWeather($scope.result1).success(function(result){
                 $scope.weather = result.query && result.query.results.channel.item.forecast;
-                $scope.city=myService.cityName;
+                $scope.city=result.query.results.channel.title.split("-")[1].trim();
                 $rootScope.city=$scope.result1; 
                 $rootScope.tempWeather = $scope.weather;
                 $rootScope.details=$scope.details1;
                 myService.details = $scope.details1; 
-            }); 
+            }).error(function(data, status){
+                    console.log(data);
+                }).finally(function(){
+                    $scope.loading=false;
+                }); 
         }
     })
 }]);
 
 myApp.controller('MapCtrl', ['$scope','myService','$rootScope',function ($scope,myService,$rootScope) {
     var mapOptions = {
-        zoom: 8,
+        zoom: 10,
         center: new google.maps.LatLng(17.385044, 78.486671),
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
@@ -109,7 +111,7 @@ myApp.controller('MapCtrl', ['$scope','myService','$rootScope',function ($scope,
 
 myApp.directive("myCurrentTime", function(dateFilter){
     return function(scope, element, attrs){
-        var format='MM/dd/yyyy h:mm:ss a';
+        var format='dd MMM yyyy h:mm:ss a';
         
         /*scope.$watch(attrs.myCurrentTime, function(value) {
             format = value;

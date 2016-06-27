@@ -113,3 +113,7 @@ div.container{
     width:100px;
     height:100px;
 }
+div.spinner{
+    align-content: flex-end;
+    background-color: transparent;
+}
