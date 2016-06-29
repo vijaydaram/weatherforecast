@@ -51,16 +51,20 @@ myApp.controller("TestCtrl",['$scope','myService','$rootScope',function ($scope,
     $scope.options1 = null;
     $scope.details1 = '';
     $scope.loading=false;
+    $scope.locationUrl='#';
+    $scope.weatherResults='';
     $scope.$watch('result1',function(){
         if($scope.result1!==''){
             $scope.loading=true;
                 myService.getWeather($scope.result1).success(function(result){
+                    $scope.weatherResults = result.query.results;
                 $scope.weather = result.query && result.query.results.channel.item.forecast;
                 $scope.city=result.query.results.channel.title.split("-")[1].trim();
                 $rootScope.city=$scope.result1; 
                 $rootScope.tempWeather = $scope.weather;
                 $rootScope.details=$scope.details1;
                 myService.details = $scope.details1; 
+                    $scope.locationUrl = 'http://maps.google.com/maps?z=10&t=p&q='+$scope.result1+'&loc:'+$scope.details1.geometry.location.lat()+'+'+$scope.details1.geometry.location.lng();
             }).error(function(data, status){
                     console.log(data);
                 }).finally(function(){
@@ -76,7 +80,11 @@ myApp.controller('MapCtrl', ['$scope','myService','$rootScope',function ($scope,
         center: new google.maps.LatLng(17.385044, 78.486671),
         mapTypeId: google.maps.MapTypeId.TERRAIN
     }
+    $scope.weatherResults='';
+    $scope.city='';
     $scope.$watch(function(){return $rootScope.city;},function(){
+         $scope.weatherResults=$rootScope.tempWeather;
+           $scope.city=$rootScope.city;
         var temp=$rootScope.details&&$rootScope.details.geometry&&$rootScope.details.geometry.location&&$rootScope.details.geometry.location.lat();
         mapOptions.center = new google.maps.LatLng(temp,$rootScope.details.geometry.location.lng());
         $scope.map = new google.maps.Map(document.getElementById('map'), mapOptions);

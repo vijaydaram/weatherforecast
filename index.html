@@ -24,9 +24,10 @@
                     <input type="text" id="Autocomplete" class="form-control" ng-autocomplete="result1" details="details1" options="options1"/>
                     </div>
                 </form>
+                    <h5 ng-if="result1 && !weatherResults && !loading"><i>Unable to retrieve weather report for: </i><b>{{result1}}</b></h5>
                     <div id="weather" ng-if="loading" class="spinner"><img ng-src="./icon/spinner.gif"/></div>
-                <div id="weather" ng-if="city && !loading">
-                    <h5 class="title"><i> Weather forecast for : </i></h5><h4 class="ng-cloak city-name">{{city | titlecase}}</h4>
+                <div id="weather" ng-if="city && !loading && weatherResults">
+                    <h5 class="title"><i> Weather forecast for : </i></h5><a href="{{locationUrl}}" ng-if="!loading"><h4 class="ng-cloak city-name">{{city | titlecase}}</h4></a>
                     <table class="table table-striped table-condensed table-hover">
                         <thead>
                             <tr>

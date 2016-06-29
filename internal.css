@@ -102,18 +102,19 @@ div.container{
         
 }
 .spinner{
-    position:fixed;
+    position:relative;
     z-index:99;/* make higher than whatever is on the page */
     top:0;
     left:0;
     right:0;
     bottom:0;
-    margin:auto;
-    background:red;
-    width:100px;
-    height:100px;
+    margin-left: 50px;    
+   
 }
 div.spinner{
-    align-content: flex-end;
     background-color: transparent;
+}
+p h4{
+    position: relative;
+    display: inline;
 }
